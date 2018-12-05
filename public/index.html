@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>News Scraper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+  <nav class="light-blue">
+    <div class="nav-wrapper container">
+      <a href="index.html" class="brand-logo center"><i class="medium material-icons">radio</i></a>
+      <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class=" hide-on-med-and-down">
+        <li class="active"><a href="index.html">Home</a></li>
+        <li><a href="articles.html">Saved Articles</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- mobile nav -->
+  <ul class="sidenav" id="mobile-nav">
+    <li class="active"><a href="index.html">Home</a></li>
+    <li><a href="articles.html">Saved Articles</a></li>
+  </ul>
+
+  <!-- Header with scrape button -->
+  <div class="parallax-container valign-wrapper">
+    <div class="container center-align">
+      <h1 class="blue-text text-darken-2">News Scraper</h1>
+      <p class="flow-text red-text text-darken-2">News From USA Today</p>
+      <button id="btnScrape" class="waves-effect waves-light btn-large red">Scrape New Articles</button>
+    </div>
+    <div class="parallax">
+      <img src="https://www.dpfzd.com/wp-content/uploads/2016/07/06image-ipad-media.jpg" alt="news important image">
+    </div>
+  </div>
+
+  <div id="articles" class="container">
+    <h3>Articles</h3>
+  </div>
+
+  <script>
+    $('.sidenav').sidenav();
+    $('.parallax').parallax();
+  </script>
+</body>
+</html>

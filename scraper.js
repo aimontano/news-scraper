@@ -1,22 +1,55 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-axios.get('https://www.usatoday.com/')
-  .then(data => {
-    let $ = cheerio.load(data.data);
+async function getDescription (url){
+  try {
+    let article = await axios(url);
+
+    let $ = cheerio.load(article.data);
+
+    let description = "";
+
+    $('p.speakable-p-1').each((i, element) => {
+      description += $(element).text();
+    });
+
+    $('p.speakable-p-2').each((i, element) => {
+      description += ` ${$(element).text()}`;
+    });
+
+    return description;
+  } catch(e) {
+    return "No Description";
+  }
+}
+
+async function getArticles () {
+  try {
+    let usaToday = await axios('https://www.usatoday.com/');
+    let $ = cheerio.load(usaToday.data);
 
     let result = [];
 
     $('.js-asset-headline').each(function (i, element){
       let title = $(element).text().trim();
       let link = $(element).parent().attr('href');
-      result.push({
-        title: title,
-        link: `https://www.usatoday.com${link}`
-      });
+
+      link = `https://www.usatoday.com${link}`;
+
+      let description =  getDescription(link)
+        .then(desc => {
+          result.push({
+            title: title,
+            link: link,
+            description: desc
+          });  
+          console.log(result);
+          return result;
+        })
     });
-    console.log(result);
-  })
-  .catch(err => {
-    throw err;
-  });
+  } catch(e) {
+    return e;
+  }
+}
+
+module.exports = getArticles;

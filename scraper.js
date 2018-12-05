@@ -23,12 +23,11 @@ async function getDescription (url){
   }
 }
 
-async function getArticles () {
+async function getArticles (cb) {
+  let result = [];
   try {
     let usaToday = await axios('https://www.usatoday.com/');
     let $ = cheerio.load(usaToday.data);
-
-    let result = [];
 
     $('.js-asset-headline').each(function (i, element){
       let title = $(element).text().trim();
@@ -43,7 +42,7 @@ async function getArticles () {
             link: link,
             description: desc
           });  
-          console.log(result);
+          cb(result);
           return result;
         })
     });
@@ -52,4 +51,6 @@ async function getArticles () {
   }
 }
 
-module.exports = getArticles;
+module.exports = {
+  getArticles
+};

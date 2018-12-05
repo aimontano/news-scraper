@@ -12,7 +12,6 @@ app.get('/scrape', (req, res) => {
   });
 
   setTimeout(function(){
-    console.log(articles);
     res.json(articles);
   }, 1000 * 2)
 })

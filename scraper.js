@@ -23,33 +23,36 @@ async function getDescription (url){
   }
 }
 
-async function getArticles () {
+async function getArticles (cb) {
+  let result = [];
   try {
     let usaToday = await axios('https://www.usatoday.com/');
     let $ = cheerio.load(usaToday.data);
-
-    let result = [];
 
     $('.js-asset-headline').each(function (i, element){
       let title = $(element).text().trim();
       let link = $(element).parent().attr('href');
 
-      link = `https://www.usatoday.com${link}`;
-
-      let description =  getDescription(link)
-        .then(desc => {
-          result.push({
-            title: title,
-            link: link,
-            description: desc
-          });  
-          console.log(result);
-          return result;
-        })
+      if(link != undefined) {
+        link = `https://www.usatoday.com${link}`;
+    
+        let description =  getDescription(link)
+          .then(desc => {
+            result.push({
+              title: title,
+              link: link,
+              description: desc
+            });  
+            cb(result);
+            return result;
+          });
+      }
     });
   } catch(e) {
     return e;
   }
 }
 
-module.exports = getArticles;
+module.exports = {
+  getArticles
+};

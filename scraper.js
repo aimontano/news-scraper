@@ -33,18 +33,20 @@ async function getArticles (cb) {
       let title = $(element).text().trim();
       let link = $(element).parent().attr('href');
 
-      link = `https://www.usatoday.com${link}`;
-
-      let description =  getDescription(link)
-        .then(desc => {
-          result.push({
-            title: title,
-            link: link,
-            description: desc
-          });  
-          cb(result);
-          return result;
-        })
+      if(link != undefined) {
+        link = `https://www.usatoday.com${link}`;
+    
+        let description =  getDescription(link)
+          .then(desc => {
+            result.push({
+              title: title,
+              link: link,
+              description: desc
+            });  
+            cb(result);
+            return result;
+          });
+      }
     });
   } catch(e) {
     return e;

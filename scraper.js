@@ -34,8 +34,9 @@ async function getArticles (cb) {
       let link = $(element).parent().attr('href');
 
       if(link != undefined) {
-        link = `https://www.usatoday.com${link}`;
-    
+        if (link[0] == '/') {
+          link = `https://www.usatoday.com${link}`;
+        }
         let description =  getDescription(link)
           .then(desc => {
             result.push({

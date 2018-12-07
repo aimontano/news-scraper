@@ -1,4 +1,10 @@
 
+// function displays a preloader to a specified location
+const displayPreloader = (loc) => {
+  let loaderWrapper = $('<div>').addClass();
+};
+
+// function display articles from scraper to a specified DOM object
 const displayArticles = articles => {
   articles.forEach(article => {
     let item = $('<a>').addClass('collection-item avatar black-text');

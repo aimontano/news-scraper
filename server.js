@@ -18,7 +18,7 @@ let databaseURI = 'mongodb://localhost/news-scraper';
 if(process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI);
 } else {
-  // mongoose.connect(databaseURI)
+  mongoose.connect(databaseURI);
 }
 
 let db = mongoose.connection;

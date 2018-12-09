@@ -24,23 +24,9 @@ if(process.env.MONGODB_URI) {
 let db = mongoose.connection;
 
 db.on('error', err => console.log("Mongoose Error:", err));
-
 db.once('open', () => console.log("Mongoose connection successful!!"));
 
-app.get('/scrape', (req, res) => {
-  let articles = [];
-  
-  scraper.getArticles(result => {
-    articles = result;
-  });
-
-  setTimeout(function(){
-    res.json(articles);
-  }, 1000 * 2)
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname +  '/index.html');
-})
+require('./routes/staticRoutes.js')(app);
+require('./routes/apiRoutes.js')(app);
 
 app.listen(PORT, e => console.log("running"));

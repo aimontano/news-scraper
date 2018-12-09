@@ -6,6 +6,9 @@ let NoteSchema = new Schema({
   note: {
     type: String,
     required: true
+  },
+  _articleId: {
+    type: Schema.Types.ObjectId
   }
 });
 

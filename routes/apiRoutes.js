@@ -11,10 +11,10 @@ if(process.env.MONGODB_URI) {
 
 let db = mongoose.connection;
 
-db.on('error', err => console.log("Mongoose Error:", err));
-db.once('open', () => console.log("Mongoose connection successful!!"));
+// db.on('error', err => console.log("Mongoose Error:", err));
+// db.once('open', () => console.log("Mongoose connection successful!!"));
 
-// db = require('./../models');
+db = require('./../models');
 
 const saveScrapedArticles = articles => {
   articles.forEach(article => {

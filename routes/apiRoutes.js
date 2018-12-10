@@ -40,6 +40,14 @@ module.exports = app => {
     }, 1000 * 2);
   }); 
   
+  // return saved articles
+  app.get('/articles', (req, res) => {
+    db.Article.find({saved: true}, (err, data) => {
+      if(err) throw err;
+      res.json(data);
+    });
+  });
+
   app.post('/articles', (req, res) => {
     // should save the article
     db.Article.findOneAndUpdate(

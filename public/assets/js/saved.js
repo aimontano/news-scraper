@@ -21,7 +21,7 @@ const displayArticles = articles => {
 
     let buttons = $('<div>').addClass('secondary-content');
     let btnDelete = $('<button>').addClass('btn-floating red');
-    let btnNote = $('<button>').addClass('btn-floating yellow darken-2');
+    let btnNote = $('<button>').addClass('btn-floating yellow darken-2 modal-trigger');
 
     let delIcon = $('<i>').addClass('material-icons');
     let noteIcon = $('<i>').addClass('material-icons');
@@ -30,6 +30,9 @@ const displayArticles = articles => {
     noteIcon.text('note_add');
 
     btnDelete.attr('id', 'btnDelete');
+
+    btnNote.attr('id', 'btnAddNote');
+    btnNote.attr('data-target', 'noteModal');
 
     btnDelete.append(delIcon);
     btnNote.append(noteIcon);
@@ -50,10 +53,26 @@ const loadSavedArticles = () => {
     });
 }
 
+
 const handleClickEvents = () => {
   $(document).on('click', '#btnDelete', function() {
     let articleId = $(this).parents('.collection-item').children('h5').data('id');
     $.post('/articles/' + articleId);
     $(this).parents('.collection-item').remove();
-  })
+  });
+
+  $(document).on('click', '#btnAddNote', function() {
+    // load clicked article information
+    let articleId = $(this).parent().parent().children('h5').data('id');
+    let title = $(this).parent().parent().children('h5').text();
+
+    $('#articleTitle').text(title);
+    // load notes 
+
+    // add note
+
+    // delete note
+  });
+
+  
 }

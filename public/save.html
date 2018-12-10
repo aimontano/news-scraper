@@ -46,12 +46,37 @@
     <ul class="collection " id="articles">
 
     </ul>
+
+    <div id="noteModal" class="modal">
+      <div class="modal-content">
+        <!-- article title -->
+        <h4 id="articleTitle"></h4>
+
+        <!-- load any article notes -->
+        <ul class="collection with-header">
+          <li class="collection-header"><h6>Notes</h6></li>
+
+        </ul>
+
+        <!-- Add note form -->
+        <form>
+          <div class="input-field">
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="txtNote" class="materialize-textarea"></textarea>
+            <label for="txtNote">Add Note</label>
+          </div>
+          <p id="error" class="red-text flow-text"></p>
+          <button id="btnSaveNote" class="btn-floating green right"><i class="material-icons">add</i></button><br><br>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script src="assets/js/saved.js"></script>
   <script>
     $('.sidenav').sidenav();
     $('.parallax').parallax();
+    $('.modal').modal();
   </script>
 </body>
 </html>

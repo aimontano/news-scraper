@@ -31,6 +31,31 @@ const displayArticles = articles => {
   });  
 };
 
+{/* <li class="collection-item avatar">
+<h5>Title</h5>
+<a href="#">Link</a>
+<p>Description</p>
+<div class="secondary-content">
+  <button class="btn-floating red"><i class="material-icons">delete</i></button>
+  <button class="btn-floating yellow darken-2"><i class="material-icons">note_add</i></button>
+</div>
+</li> */}
+
 $(document).on('click', '#btnScrape', function(){
   $.get('/scrape', displayArticles);
 });
+
+$(document).on('click', '.secondary-content.btn-floating.red', function(){
+  // get article title
+  let article = $(this).siblings('h5').text();
+
+  // remove article
+  $(this).parent('.collection-item').remove();
+
+  // save article
+  $.ajax({
+    url: '/articles',
+    method: 'POST',
+    data: { article: article}
+  });
+})

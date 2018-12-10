@@ -40,7 +40,25 @@ module.exports = app => {
     }, 1000 * 2);
   }); 
   
-  app.get('/articles', (req, body) => {
-
+  app.post('/articles', (req, res) => {
+    // should save the article
+    db.Article.findOneAndUpdate(
+      {
+        title: req.body.article
+      },
+      {
+        $set: {
+          saved: true
+        }
+      },
+      {
+        new: true
+      },
+      (err, data) => {
+        if(err) throw err;
+        console.log("Article was saved!");
+        res.json(data);
+      }
+      );
   });
 }

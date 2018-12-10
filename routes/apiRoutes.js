@@ -114,4 +114,17 @@ module.exports = app => {
       res.end(400);
     }
   });
+
+  app.post('/delete', (req, res) => {
+    let type = req.body.type;
+    let id = req.body.id;
+    if(type === 'note' && id) {
+      db.Note.remove({_id: id}, (err, data) => {
+        if(err) throw err;
+        res.json(data);
+      })
+    } else {
+      res.send("Bad request!");
+    }
+  })
 }

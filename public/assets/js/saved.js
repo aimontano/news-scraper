@@ -75,6 +75,18 @@ const loadSavedArticles = () => {
     });
 }
 
+const deleteNote = id => {
+  return (
+    $.ajax({
+    url: '/delete',
+    method: 'POST',
+    data: {
+      type: 'note',
+      id: id
+    }
+  }));
+}
+
 const loadArticleNotes = id => {
   $.get('/notes/' + id).then(function(response) {
     displayNotes(response);
@@ -125,7 +137,11 @@ const handleClickEvents = () => {
   });
 
   $(document).on('click', '#btnDeleteNote', function() {
-    let noteId = $('');
-    // deleteNote(noteId);
+    let noteId = $(this).siblings('p').data('id');
+    let noteCollectionItem = $(this).parents('.collection-item');
+
+    deleteNote(noteId).then(function(response){
+      noteCollectionItem.remove();
+    });
   });
-}
+};

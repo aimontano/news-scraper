@@ -67,6 +67,7 @@ const handleClickEvents = () => {
     let title = $(this).parent().parent().children('h5').text();
 
     $('#articleTitle').text(title);
+    $('#articleTitle').attr('data-id', articleId);
     // load notes 
 
     // add note
@@ -74,5 +75,28 @@ const handleClickEvents = () => {
     // delete note
   });
 
-  
+  $(document).on('click', '#btnSaveNote', function(e){
+    e.preventDefault();
+    $('#error').text("");
+    let note = $('#txtNote').val().trim();
+
+    if(note.length < 4) {
+      $('#error').text("You must enter a note");
+    } else {
+      // add note
+      $.ajax({
+        url: '/notes',
+        method: 'POST',
+        data: {
+          articleId: $('#articleTitle').data('id'),
+          note: note
+        }
+      }).then(function(response) {
+        console.log(response);
+      });
+    }
+
+    // clear textarea
+    $('#txtNote').val('');
+  })
 }

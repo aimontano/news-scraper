@@ -84,5 +84,31 @@ module.exports = app => {
         if(err) throw err;
         res.json({message: "Article has been deleted!"});
       });
-  })  
+  });
+  
+  app.post('/notes', (req, res) => {
+    console.log(req.body);
+    if(req.body.articleId && req.body.note) {
+      // save note
+      db.Note.create({
+        note: req.body.note,
+        _articleId: mongoose.Types.ObjectId(req.body.articleId)
+      }).then(data => {
+        console.log(data);
+        res.json(data);
+      })
+    } else {
+      res.json({error: "Bad request!"});
+    }
+  });
+
+  app.get('/notes/:id', (req, res) => {
+    let articleId = req.params.id;
+    console.log(articleId);
+    if(articleId){
+      res.end(203);
+    } else {
+      res.end(400);
+    }
+  });
 }

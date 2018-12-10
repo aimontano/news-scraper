@@ -36,8 +36,12 @@ module.exports = app => {
   
     setTimeout(function(){
       saveScrapedArticles(articles);
-      res.json(articles);
     }, 1000 * 2);
+
+    db.Article.find({}, (err, data) => {
+      if(err) throw err;
+      res.json(data);
+    })
   }); 
   
   // return saved articles

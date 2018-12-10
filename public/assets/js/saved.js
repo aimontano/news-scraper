@@ -100,7 +100,12 @@ const handleClickEvents = () => {
     $(this).parents('.collection-item').remove();
   });
 
-  $(document).on('click', '#btnAddNote', function() {
+  $(document).on('click', '#btnAddNote', function(e) {
+    e.stopImmediatePropagation();
+
+    // clear collection before executing the note loading
+    $('#notesCollection li.collection-item').remove();
+     
     // load clicked article information
     let articleId = $(this).parent().parent().children('h5').data('id');
     let title = $(this).parent().parent().children('h5').text();

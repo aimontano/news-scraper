@@ -38,7 +38,7 @@ module.exports = app => {
       saveScrapedArticles(articles);
     }, 1000 * 2);
 
-    db.Article.find({}, (err, data) => {
+    db.Article.find({saved: false}, (err, data) => {
       if(err) throw err;
       res.json(data);
     })

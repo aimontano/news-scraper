@@ -3,7 +3,7 @@ $(function(){
   handleClickEvents();
 })
 
-const displayArticles = articles => {
+function displayArticles (articles) {
   articles.forEach(article => {
     let item = $('<li>').addClass('collection-item avatar');
     let title = $('<h5>').text(article.title);
@@ -44,8 +44,8 @@ const displayArticles = articles => {
   });
 }
 
-const displayNotes = notes => {
-  notes.forEach(note => {
+function displayNotes (notes){
+  notes.forEach(function(note) {
     let item = $('<li>').addClass('collection-item avatar');
     let noteIcon = $('<i>').addClass('material-icons circle blue');
     let noteContent = $('<p>').text(note.note);
@@ -68,14 +68,14 @@ const displayNotes = notes => {
   });
 }
 
-const loadSavedArticles = () => {
+function loadSavedArticles () {
   $.get('/articles/')
     .then(function(data) {
       displayArticles(data);
     });
 }
 
-const deleteNote = id => {
+function deleteNote (id) {
   return (
     $.ajax({
     url: '/delete',
@@ -87,13 +87,13 @@ const deleteNote = id => {
   }));
 }
 
-const loadArticleNotes = id => {
+function loadArticleNotes(id) {
   $.get('/notes/' + id).then(function(response) {
     displayNotes(response);
   })
 }
 
-const handleClickEvents = () => {
+function handleClickEvents () {
   $(document).on('click', '#btnDelete', function() {
     let articleId = $(this).parents('.collection-item').children('h5').data('id');
     $.post('/articles/' + articleId);
@@ -101,11 +101,10 @@ const handleClickEvents = () => {
   });
 
   $(document).on('click', '#btnAddNote', function(e) {
-    e.stopImmediatePropagation();
-
+    // e.stopImmediatePropagation();
     // clear collection before executing the note loading
     $('#notesCollection li.collection-item').remove();
-     
+
     // load clicked article information
     let articleId = $(this).parent().parent().children('h5').data('id');
     let title = $(this).parent().parent().children('h5').text();
@@ -117,9 +116,10 @@ const handleClickEvents = () => {
   });
 
   $(document).on('click', '#btnSaveNote', function(e){
-    e.preventDefault();
     $('#error').text("");
     let note = $('#txtNote').val().trim();
+    let articleId = $('h4#articleTitle').data('id');
+    console.log(articleId);
 
     if(note.length < 4) {
       $('#error').text("You must enter a note");
@@ -129,16 +129,18 @@ const handleClickEvents = () => {
         url: '/notes',
         method: 'POST',
         data: {
-          articleId: $('#articleTitle').data('id'),
+          articleId: articleId,
           note: note
         }
       }).then(function(response) {
+        $('.modal').modal('close');
         displayNotes([response]);
       });
     }
 
     // clear textarea
     $('#txtNote').val('');
+    // e.preventDefault();
   });
 
   $(document).on('click', '#btnDeleteNote', function() {

@@ -69,4 +69,20 @@ module.exports = app => {
       }
       );
   });
+
+  // route deletes article from saved page
+  app.post('/articles/:id', (req, res) => {
+    let articleId = req.params.id;
+    
+    db.Article.findOneAndUpdate({_id: articleId}, 
+      {
+        $set: {
+          saved: false
+        }
+      },
+      (err, data) => {
+        if(err) throw err;
+        res.json({message: "Article has been deleted!"});
+      });
+  })  
 }

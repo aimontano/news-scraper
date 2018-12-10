@@ -1,5 +1,3 @@
-
-
 $(function(){
   loadSavedArticles();
   handleClickEvents();
@@ -46,6 +44,30 @@ const displayArticles = articles => {
   });
 }
 
+const displayNotes = notes => {
+  notes.forEach(note => {
+    let item = $('<li>').addClass('collection-item avatar');
+    let noteIcon = $('<i>').addClass('material-icons circle blue');
+    let noteContent = $('<p>').text(note.note);
+    let btnDelete = $('<button>').addClass('secondary-content btn-floating red');
+    let deleteIcon = $('<i>').addClass('material-icons');
+
+    noteContent.attr('data-id', note._id);
+
+    noteIcon.text('note');
+    deleteIcon.text('delete');
+
+    btnDelete.attr("id", "btnDeleteNote");
+    btnDelete.append(deleteIcon);
+
+    item.append(noteIcon);
+    item.append(noteContent);
+
+    item.append(btnDelete);
+    $('#notesCollection').append(item);
+  });
+}
+
 const loadSavedArticles = () => {
   $.get('/articles/')
     .then(function(data) {
@@ -53,6 +75,11 @@ const loadSavedArticles = () => {
     });
 }
 
+const loadArticleNotes = id => {
+  $.get('/notes/' + id).then(function(response) {
+    displayNotes(response);
+  })
+}
 
 const handleClickEvents = () => {
   $(document).on('click', '#btnDelete', function() {
@@ -69,10 +96,7 @@ const handleClickEvents = () => {
     $('#articleTitle').text(title);
     $('#articleTitle').attr('data-id', articleId);
     // load notes 
-
-    // add note
-
-    // delete note
+    loadArticleNotes(articleId);
   });
 
   $(document).on('click', '#btnSaveNote', function(e){
@@ -92,11 +116,16 @@ const handleClickEvents = () => {
           note: note
         }
       }).then(function(response) {
-        console.log(response);
+        displayNotes([response]);
       });
     }
 
     // clear textarea
     $('#txtNote').val('');
-  })
+  });
+
+  $(document).on('click', '#btnDeleteNote', function() {
+    let noteId = $('');
+    // deleteNote(noteId);
+  });
 }

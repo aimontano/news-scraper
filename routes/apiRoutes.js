@@ -106,7 +106,10 @@ module.exports = app => {
     let articleId = req.params.id;
     console.log(articleId);
     if(articleId){
-      res.end(203);
+      db.Note.find({_articleId: articleId}, (err, data) => {
+        if(err) throw err;
+        res.json(data);
+      })
     } else {
       res.end(400);
     }
